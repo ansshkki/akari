@@ -1,4 +1,4 @@
-:- include("ex2.pl").
+:- include("ex10.pl").
 
 :- dynamic light/2, lighted_cell/2, x_cell/2, row/1, column/1.
 
@@ -15,11 +15,15 @@ init:- retractall(light(_, _)), retractall(lighted_cell(_, _)), retractall(x_cel
  * Main rule
  */
 solve:- \+invert_solve.
-invert_solve:- \+solved, check_solution_duplication, num_neigbour, \+singles, \+singles_in_row, \+singles_in_column, solve.
+invert_solve:- \+solved, check_solution_duplication, num_neigbour, \+singles, \+singles_in_row, \+singles_in_column, mark_num_neighbours_with_x, solve.
+
+mark_num_neighbours_with_x:- \+x_neighbours(4), \+x_neighbours(3), \+x_neighbours(2), \+x_neighbours(1).
+x_neighbours(N):- wall_num(X, Y, N), neighbour(X, Y, L), lights_count_in(L, C),
+    N is C, available_cells(L, L1), mark_x(L1), fail.
 
 num_neigbour:- \+light_neighbours(4), \+light_neighbours(3), \+light_neighbours(2), \+light_neighbours(1).
 light_neighbours(N):- wall_num(X, Y, N), neighbour(X, Y, L), lights_count_in(L, C),
-available_cells(L, L1), length(L1, Len), N is C + Len, set_lights_in(L1), fail.
+    available_cells(L, L1), length(L1, Len), N is C + Len, set_lights_in(L1), fail.
 
 singles:- empty_cell(R, C), row_items(R, C, L1), available_cells(L1, L11), length(L11, 0),
     column_items(R, C, L2), available_cells(L2, L22), length(L22, 0), set_lights_in([[R, C]]), fail.

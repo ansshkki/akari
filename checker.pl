@@ -1,4 +1,4 @@
-:- include("ex1.pl").
+:- include("ex9.pl").
 
 :- dynamic row/1, column/1.
 set_row(0) :- !.
