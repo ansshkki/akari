@@ -1,4 +1,4 @@
-:- include("ex10.pl").
+:- include("examples/ex10.pl").
 
 :- dynamic light/2, lighted_cell/2, x_cell/2, row/1, column/1.
 
