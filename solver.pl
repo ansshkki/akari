@@ -1,10 +1,10 @@
 :- include("checker.pl").
 
-:- dynamic light/2, lighted_cell/2, x_cell/2.
-
 :- initialization(init_solver).
 init_solver:- retractall(light(_, _)), retractall(lighted_cell(_, _)), retractall(x_cell(_, _)), retractall(row(_)), retractall(column(_)),
     size(X, Y), set_row(X), set_column(Y), \+mark_0s_neighbours_with_x, nb_setval(current_solution, ""), nb_setval(temp, "").
+
+:- dynamic light/2, lighted_cell/2, x_cell/2.
 
 /* 
  * Main rule

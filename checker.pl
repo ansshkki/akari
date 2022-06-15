@@ -1,14 +1,17 @@
 :- include("examples/ex10.pl").
 
+:- initialization(init_checker).
+init_checker:- retractall(row(_)), retractall(column(_)), size(X, Y), set_row(X), set_column(Y).
+
 :- dynamic row/1, column/1.
 set_row(0) :- !.
 set_row(R):- R > 0, asserta(row(R)), R1 is R - 1, set_row(R1).
 set_column(0) :- !.
 set_column(C):- C > 0, asserta(column(C)), C1 is C - 1, set_column(C1).
 
-:- initialization(init_checker).
-init_checker:- retractall(row(_)), retractall(column(_)), size(X, Y), set_row(X), set_column(Y).
-
+/*
+ * Main Rule
+ */
 solved:- \+any_dimmed_cell, \+any_double_light, \+any_incorrect_count.
 
 any_dimmed_cell:- row(R), column(C), \+is_cell_lighted(R, C), !.
